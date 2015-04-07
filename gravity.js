@@ -1,6 +1,9 @@
 (function() {
 
   var canvas = document.getElementById('canvas');
+  var tailToggleCheckbox = document.getElementById('tailToggle');
+  var particleSize = document.getElementById('particleSize');
+
   var ctx = canvas.getContext('2d');
 
   if (!ctx) {
@@ -13,7 +16,6 @@
 
   var physics = new Physics();
 
-  var radius = 1; // size of particle
   var mass = 10; // More mass the faster they go
   var mass2 = 10; // More mass the faster they go
   var mass3 = 20; // More mass the faster they go
@@ -52,7 +54,29 @@
   var attraction3 = physics.makeAttraction(c, d, strength2, minDistance);
 
 
+  var stars = function() 
+  {
+    for(var i = 0; i < Math.random() * 10000; i+=1)
+    {
+      var x = Math.random() * 10000 % window.innerWidth;
+      var y = Math.random() * 10000 % window.innerHeight;
+     
+      ctx.beginPath();
+      ctx.fillStyle = 'white';
+      ctx.arc(x, y, 1, 0, Math.PI * 2, false);
+      ctx.fill();
+    }
+  }
+
   var render = function() {
+
+    if(!tailToggleCheckbox.checked)
+    {
+      ctx.clearRect ( 0 , 0 , canvas.width, canvas.height );
+    }
+
+    var radius = particleSize.value; // size of particle
+
 
     var x1 = a.position.x;
     var y1 = a.position.y;
@@ -102,7 +126,8 @@
   canvas.onclick = function(e) {
     physics.toggle(); // Toggle between play and paused states.
   };
-  
+
+
   // store our physics object on the canvas so we can access it later
   canvas.physics = physics;
   physics.play();
