@@ -50,7 +50,10 @@ td {
 
 
 
-/* Range button bullshiz */
+/* 
+	Range button bullshiz 
+	Stolen From http://www.htmllion.com/html5-range-input-with-css.html
+*/
 
 input[type='range'] {
 	-webkit-appearance: none;
