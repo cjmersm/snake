@@ -1,11 +1,12 @@
 var canvas = document.getElementById('canvas');
 var tailToggleCheckbox = document.getElementById('tailToggle');
 var particleSize = document.getElementById('particleSize');
+var boundryToggle = document.getElementById('boundryToggle');
 
-var NUM_OF_PARTICLES = 1000;
+var NUM_OF_PARTICLES = 500;
 var MIN_DISTANCE = canvas.width;
-var ATTRACTION_STRENGTH = 100;
-var SMALLEST_RADIUS = 2;
+var ATTRACTION_STRENGTH = 50;
+var SMALLEST_RADIUS = 1;
 
 
 var ctx = canvas.getContext('2d');
@@ -51,17 +52,18 @@ for(var i = 0; i < NUM_OF_PARTICLES ; i++)
 
 
 // Attractions
-for(var i = 0; i < 5*NUM_OF_PARTICLES; i++)
+for(var i = 0; i < NUM_OF_PARTICLES; i++)
 {
-  var particleIndexA = getRandomInt(0, NUM_OF_PARTICLES-1);
-  var particleIndexB = getRandomInt(0, NUM_OF_PARTICLES-1);
+  var particleA = listOfParticles[i].baseParticle;
 
-  if(particleIndexA != particleIndexB)
+  for(var j = 0; j < NUM_OF_PARTICLES; j++)
   {
-    var particleA = listOfParticles[particleIndexA].baseParticle;
-    var particleB = listOfParticles[particleIndexB].baseParticle;
+      var particleB = listOfParticles[j].baseParticle;
 
-    physics.makeAttraction(particleA, particleB, ATTRACTION_STRENGTH, MIN_DISTANCE);    
+      if(i != j)
+      {
+        physics.makeAttraction(particleA, particleB, ATTRACTION_STRENGTH, MIN_DISTANCE);    
+      }
   }
 }
 
@@ -102,25 +104,27 @@ var render = function() {
   {
     var particle = listOfParticles[i];
 
+    if(boundryToggle.checked)
+    {
 
-    if(particle.baseParticle.position.x > ctx.canvas.width - 1)
-    {
-      particle.baseParticle.velocity.x = -particle.baseParticle.velocity.x;
-    }
-    if(particle.baseParticle.position.x < 1)
-    {
-      particle.baseParticle.velocity.x = -particle.baseParticle.velocity.x;
-    }
-    if(particle.baseParticle.position.y > ctx.canvas.height - 1)
-    {
-      particle.baseParticle.velocity.y = -particle.baseParticle.velocity.y;
-    }
-    if(particle.baseParticle.position.y < 1)
-    {
-      particle.baseParticle.velocity.y = -particle.baseParticle.velocity.y;
-    }
+      if(particle.baseParticle.position.x > ctx.canvas.width - 1)
+      {
+        particle.baseParticle.velocity.x = -particle.baseParticle.velocity.x;
+      }
+      if(particle.baseParticle.position.x < 1)
+      {
+        particle.baseParticle.velocity.x = -particle.baseParticle.velocity.x;
+      }
+      if(particle.baseParticle.position.y > ctx.canvas.height - 1)
+      {
+        particle.baseParticle.velocity.y = -particle.baseParticle.velocity.y;
+      }
+      if(particle.baseParticle.position.y < 1)
+      {
+        particle.baseParticle.velocity.y = -particle.baseParticle.velocity.y;
+      }
 
-
+    }
 
     ctx.beginPath();
     ctx.fillStyle = '#'+particle.color
