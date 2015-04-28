@@ -3,10 +3,10 @@ var tailToggleCheckbox = document.getElementById('tailToggle');
 var particleSize = document.getElementById('particleSize');
 var boundryToggle = document.getElementById('boundryToggle');
 
-var NUM_OF_PARTICLES = 500;
+var NUM_OF_PARTICLES = 100;
 var MIN_DISTANCE = canvas.width;
-var ATTRACTION_STRENGTH = 50;
-var SMALLEST_RADIUS = 1;
+var ATTRACTION_STRENGTH = 10;
+var SMALLEST_RADIUS = 2;
 
 
 var ctx = canvas.getContext('2d');
