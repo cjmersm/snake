@@ -2,12 +2,19 @@ var canvas = document.getElementById('canvas');
 var tailToggleCheckbox = document.getElementById('tailToggle');
 var particleSize = document.getElementById('particleSize');
 var boundryToggle = document.getElementById('boundryToggle');
+var numOfParticles = document.getElementById('numOfParticles');
 
-var NUM_OF_PARTICLES = 100;
+var particlesMass = document.getElementById('mass');
+var attractionStrength = document.getElementById('strength');
+var pixelSize = document.getElementById('size');
+
+var NUM_OF_PARTICLES = 1000;
 var MIN_DISTANCE = canvas.width;
-var ATTRACTION_STRENGTH = 10;
-var SMALLEST_RADIUS = 2;
+var ATTRACTION_STRENGTH = 40;
+var RADIUS = 1;
+var MASS = 1;
 
+numOfParticles.value = NUM_OF_PARTICLES;
 
 var ctx = canvas.getContext('2d');
 
@@ -31,10 +38,10 @@ var listOfAttractions = new Array();
 // Particles
 for(var i = 0; i < NUM_OF_PARTICLES ; i++)
 {
-  var uMass = getRandomInt(1,50);
+  var uMass = MASS;
   var uxStart = getRandomInt(0,ctx.canvas.width);
   var uyStart = getRandomInt(0,ctx.canvas.height);
-  var uRadius = SMALLEST_RADIUS;
+  var uRadius = RADIUS;
 
   var particle = {
     color : Math.floor(Math.random()*16777215).toString(16),
@@ -51,6 +58,8 @@ for(var i = 0; i < NUM_OF_PARTICLES ; i++)
 }
 
 
+
+
 // Attractions
 for(var i = 0; i < NUM_OF_PARTICLES; i++)
 {
@@ -62,7 +71,8 @@ for(var i = 0; i < NUM_OF_PARTICLES; i++)
 
       if(i != j)
       {
-        physics.makeAttraction(particleA, particleB, ATTRACTION_STRENGTH, MIN_DISTANCE);    
+        physics.makeAttraction(particleA, particleB, ATTRACTION_STRENGTH, MIN_DISTANCE); 
+        //physics.makeAttraction(particleB, particleA, ATTRACTION_STRENGTH, MIN_DISTANCE); 
       }
   }
 }
@@ -107,19 +117,19 @@ var render = function() {
     if(boundryToggle.checked)
     {
 
-      if(particle.baseParticle.position.x > ctx.canvas.width - 1)
+      if(particle.baseParticle.position.x > ctx.canvas.width)
       {
         particle.baseParticle.velocity.x = -particle.baseParticle.velocity.x;
       }
-      if(particle.baseParticle.position.x < 1)
+      if(particle.baseParticle.position.x < 0)
       {
         particle.baseParticle.velocity.x = -particle.baseParticle.velocity.x;
       }
-      if(particle.baseParticle.position.y > ctx.canvas.height - 1)
+      if(particle.baseParticle.position.y > ctx.canvas.height)
       {
         particle.baseParticle.velocity.y = -particle.baseParticle.velocity.y;
       }
-      if(particle.baseParticle.position.y < 1)
+      if(particle.baseParticle.position.y < 0)
       {
         particle.baseParticle.velocity.y = -particle.baseParticle.velocity.y;
       }
