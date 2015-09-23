@@ -8,7 +8,7 @@ var particlesMass = document.getElementById('mass');
 var attractionStrength = document.getElementById('strength');
 var pixelSize = document.getElementById('size');
 
-var NUM_OF_PARTICLES = 1000;
+var NUM_OF_PARTICLES = 200;
 var MIN_DISTANCE = canvas.width;
 var ATTRACTION_STRENGTH = 40;
 var RADIUS = 1;
